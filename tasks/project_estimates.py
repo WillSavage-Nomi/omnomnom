@@ -11,15 +11,17 @@ class Task:
     def weighted_estimate(self):
         """Return the estimate calculated by ``Etask = (a + 4m + b) / 6`` formulae."""
         Etask = (self.a + 4*self.m + self.b) / 6
-        print(Etask,"============================") 
         return Etask
 
 
     def standard_deviation(self):
         """Return the deviation calculated by ``SDtask = (b - a) / 6`` formulae."""
         SDtask = (self.b - self.a) / 6
-        print(SDtask,"+++++++++++++++++++++")
         return SDtask
+
+# tasks = Task("Will's Project",20,15,12)
+# print(tasks.weighted_estimate(),"weighted estimate")
+# print(tasks.standard_deviation(),'standard dev')
 
 
 class Project:
@@ -36,7 +38,7 @@ class Project:
 
         Formulae: ``Eproject = ∑Etask``
         """
-        Eproject = sum(Task.weighted_estimate(self))
+        Eproject = sum(Task.weighted_estimate())
         return Eproject
 
 
@@ -46,8 +48,11 @@ class Project:
 
         Formulae: ``SEproject = √∑SEtask²``
         """
-        SEproject = math.sqrt(sum((Task.standard_deviation())**2))
+        SEproject = math.sqrt((Task.standard_deviation()**2)) #sum
         return SEproject
+
+
+#print(Project("Will's Project").weighted_estimate())
 
 
 class ConfidenceInterval95:
@@ -76,7 +81,7 @@ class ConfidenceInterval95:
 
     def __str__(self):
         return (
-            #"Project's 95% confidence interval: "
+            "Project's 95% confidence interval: "
             f"{self.min_duration()} ... {self.max_duration()} points"
         )
 
