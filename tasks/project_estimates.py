@@ -1,4 +1,5 @@
 # https://bohdan-lesiv.github.io/omnomnom/python-04.html
+import math
 
 class Task:
     def __init__(self, name, best_case, most_likely, worst_case):
@@ -9,9 +10,16 @@ class Task:
 
     def weighted_estimate(self):
         """Return the estimate calculated by ``Etask = (a + 4m + b) / 6`` formulae."""
+        Etask = (self.a + 4*self.m + self.b) / 6
+        print(Etask,"============================") 
+        return Etask
+
 
     def standard_deviation(self):
-        """Return the deviation calculated by ``SDtask = (b − a) / 6`` formulae."""
+        """Return the deviation calculated by ``SDtask = (b - a) / 6`` formulae."""
+        SDtask = (self.b - self.a) / 6
+        print(SDtask,"+++++++++++++++++++++")
+        return SDtask
 
 
 class Project:
@@ -28,6 +36,9 @@ class Project:
 
         Formulae: ``Eproject = ∑Etask``
         """
+        Eproject = sum(Task.weighted_estimate(self))
+        return Eproject
+
 
     def standard_error(self):
         """
@@ -35,6 +46,8 @@ class Project:
 
         Formulae: ``SEproject = √∑SEtask²``
         """
+        SEproject = math.sqrt(sum((Task.standard_deviation())**2))
+        return SEproject
 
 
 class ConfidenceInterval95:
@@ -47,6 +60,9 @@ class ConfidenceInterval95:
 
         Formulae: ``CIproject = Eproject + 2 x SEproject``
         """
+        CIproject = Project.weighted_estimate() + 2 * Project.standard_error()
+        return CIproject
+
 
     def min_duration(self):
         """
@@ -54,10 +70,13 @@ class ConfidenceInterval95:
 
         Formulae: ``CIproject = Eproject - 2 x SEproject``
         """
+        CIproject = Project.weighted_estimate(self) - 2 * Project.standard_error()
+        return CIproject
+
 
     def __str__(self):
         return (
-            "Project's 95% confidence interval: "
+            #"Project's 95% confidence interval: "
             f"{self.min_duration()} ... {self.max_duration()} points"
         )
 
