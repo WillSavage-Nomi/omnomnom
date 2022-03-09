@@ -38,7 +38,7 @@ class Project:
 
         Formulae: ``Eproject = ∑Etask``
         """
-        Eproject = sum(Task.weighted_estimate())
+        Eproject = sum(task.weighted_estimate() for task in self.tasks)
         return Eproject
 
 
@@ -48,7 +48,7 @@ class Project:
 
         Formulae: ``SEproject = √∑SEtask²``
         """
-        SEproject = math.sqrt((Task.standard_deviation()**2)) #sum
+        SEproject = math.sqrt(sum((task.standard_deviation()**2 for task in self.tasks))) 
         return SEproject
 
 
